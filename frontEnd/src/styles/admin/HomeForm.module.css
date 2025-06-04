@@ -1,0 +1,208 @@
+
+.app {
+    text-align: left;
+}
+
+.app label {
+    text-align: left;
+    display: block;
+    margin: 0;
+}
+.app h1 {
+    text-align: center;
+}
+.app h6 {
+    margin: 20px;
+    font-size: large;
+    font-weight: 100;
+    color: #303030;
+}
+
+.app h3 {
+    margin: auto 20px;
+    color: black;
+}
+
+
+.top {
+    border: 1px rgb(44, 44, 44) solid;
+    border-width: 0 0 1px 0 ;
+
+}
+
+
+
+
+
+
+/* player admin form */
+
+.select {
+    display: inline-block;
+    margin: 20px;
+    width: 100%;
+}
+
+.select select {
+    font-size: x-large;
+
+}
+
+.pimg {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    margin: auto;
+}
+
+.pimg img {
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.teamAdmin {
+    text-align: left;
+}
+
+.teamadminmenu {
+    margin: 10px;
+
+}
+
+.teamadminmenulist {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+
+}
+
+
+
+
+
+/* news form */
+
+
+.textarea {
+    text-align: left;
+    margin: 10px;
+    display: block;
+}
+
+.textarea textarea {
+    width: 90%;
+
+}
+
+
+
+
+
+/* news list */
+.newsgrid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+
+}
+
+
+
+
+
+
+.app form {
+    width: 70%;
+    margin: auto;
+    background: white;
+}
+
+.half_inp {
+    width: 50%;
+}
+
+.app form select {
+    /* width: 100%; */
+    border: 1px rgb(44, 44, 44) solid;
+    
+
+}
+
+.app form option {
+    width: 100%;
+    border: 1px rgb(44, 44, 44) solid;
+    background: rgb(22, 22, 22);
+    color: rgb(255, 255, 255);
+
+}
+
+.name {
+    display: flex;
+}
+
+
+
+
+@media (max-width: 800px) {
+    .fix, .res, .squads {
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+    .app form {
+    width: 90%;
+}
+}
+
+
+
+
+
+
+@media (max-width: 700px) {
+    
+    
+
+ }
+
+
+ @media (max-width: 500px) {
+    .fix, .res, .squads {
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+
+    .newsgrid {
+        grid-template-columns: repeat(3, 1fr);
+
+    }
+    .half_inp {
+        width: auto;
+    }
+
+    .name {
+        display: block;
+    }
+    
+}
+
+
+
+
+
+@media (max-width: 450px) {
+
+
+    .select select {
+        font-size: medium;
+    }
+    
+
+    .newsgrid {
+        grid-template-columns: repeat(1, 1fr);
+
+    }
+    
+    
+     }
