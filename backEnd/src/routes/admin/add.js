@@ -19,12 +19,104 @@ const Codeofconduct = require('../../models/news/codesofconduct')
 const CupStanding = require('../../models/competition/standing/cup')
 const Live = require('../../models/competition/live')
 const Sub_Region = require('../../models/competition/competition-location')
+const _ = require("lodash");
+const nodemailer = require('nodemailer');
+const hbs = require('nodemailer-express-handlebars')
 
 
 
 
+ router.patch ('/send-mail', async (req, res) => {
+   
 
 
+    const ff = {
+            address: "Shangan",
+            app_date: "2025-06-11",
+            bankruptcy_in_past_3years: "no",
+            broken_lease: "yes",
+            children_minor: "no",
+            city: "Ballymun",
+            deposit: "33",
+            dob: "2222-02-22",
+            email: "sanuthrahman@gmail.com",
+            employment: "employed",
+            felony: "no",
+            fname: "Abdulrahaman",
+            guarantor: "no",
+            how_do_you_plan_to_use_your_new_home: "ff",
+            income_month: "22",
+            income_year: "44",
+            length: "3 months",
+            lname: "Sanuth",
+            origin: "Dublin",
+            people_will_be_living_in_the_unit: "2",
+            pet: "yes",
+            phone: "0899797074",
+            rules: "yes",
+            signature: "eeee",
+            smoke: "yes",
+            status: "living with family"
+    } 
+
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    type: 'gmail',
+    user: process.env.EMAIL,
+    pass: process.env.PASS_EMAIL
+ }
+});
+
+const handlebarOptions = {
+    viewEngine: {
+        partialsDir: path.resolve('./views/'),
+        defaultLayout: false,
+    },
+    viewPath: path.resolve('./views/'),
+};
+
+// use a template file with nodemailer
+transporter.use('compile', hbs(handlebarOptions))
+let h1 = _.capitalize(title);
+
+let h1T = h1
+
+
+const mailOptions = {
+  from: process.env.EMAIL,
+  to: process.env.EMAIL,
+  subject: 'NEW TENANT AVAILABLE',
+  template: "email",
+  context: {
+    product: customer.product,
+    name: customer.fname + customer.lname,
+    phone: customer.phone,
+    email: customer.email,
+    variant: customer.variant,
+    delivery: customer.delivery,
+    item: customer.price,
+    qty: customer.quantity,
+    total: customer.total,
+    img: h1T,
+  },
+  
+
+  attachments: [{ filename: "logoR", path: "./attachments/logoR.png"}, {filename: "size", path: "./attachments/" + h1T + "/" + customer.variant + ".jpg" }],
+
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+
+
+});
 
 
 

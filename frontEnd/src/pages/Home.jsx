@@ -18,10 +18,10 @@ function App() {
   return (
     <div>
            
-        <Nav />
+        {/* <Nav /> */}
         <HomeForm/>
-
-        <TopNews />
+{/* 
+        <TopNews /> */}
 
          {/* <Highlight /> */}
         {/* <Awards /> */}
@@ -40,12 +40,12 @@ function App() {
 
               {/* <Slist /> */}
 
-              <Competition />
+              {/* <Competition />
 
-              <Team />
+              <Team /> */}
 
 
-              <Footer />
+              {/* <Footer /> */}
     </div>
   );
 }

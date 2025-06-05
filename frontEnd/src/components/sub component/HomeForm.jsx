@@ -7,8 +7,6 @@ import { ToastContainer, toast, Bounce } from 'react-toastify';
 import { AlertError, Inputs } from "./list/Generallist";
 
 
-
-
 const HomeForm = ({teamid, event, typeId }) => {
   const [data, setInputs] = useState({})
   const [img, setFile] = useState({});
@@ -19,6 +17,9 @@ const HomeForm = ({teamid, event, typeId }) => {
 
 
   let navigate = useNavigate()
+
+  console.log(data);
+  
 
 
 
@@ -100,6 +101,12 @@ const HomeForm = ({teamid, event, typeId }) => {
       });
     
             formData.append('data',  JSON.stringify(data));
+
+
+            if (data.rules == "no") {
+              return AlertError("you didn't accept the rules and regulations kindly cancel or accept")
+
+            }
     
     
     
@@ -109,6 +116,8 @@ const HomeForm = ({teamid, event, typeId }) => {
        // headers: {'Content-Type': "application/json", },
         body:   formData
         })
+
+
         
         .then((res) => {
            if (res.status == 200) {
@@ -211,6 +220,8 @@ const HomeForm = ({teamid, event, typeId }) => {
 
 
 
+          <h6 > EMPLOYMENT DETAILS 👇👇👇 </h6>
+
 
  
 
@@ -219,7 +230,7 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         <label >Employment status</label>
 
-          <select id="employment" name={"employment"} onChange={handleChange} title="employment" Value={data.employment} >
+          <select id="employment" name={"employment"} onChange={handleChange} title="employment" Value={data.employment} required >
 
           { data.employment ? null : <option value={""} > Employment status  </option> }
 
@@ -242,12 +253,15 @@ const HomeForm = ({teamid, event, typeId }) => {
         <Inputs label={'Annual Income from employment '} type={'number'} name={'income_year'} onchange={handleChange} value={data.income_year} placeholder={'Annual Income from employment '} disabled={false} required={true}  />
         
 
+
+          <h6 > residential status 👇👇👇 </h6>
+
         <div className={Style.select} >
 
 
         <label >Applicant current residential status </label>
 
-          <select id="status" name={"status"} onChange={handleChange} title="status" Value={data.status} >
+          <select id="status" name={"status"} onChange={handleChange} title="status" Value={data.status} required>
 
           { data.status ? null : <option value={""} > select martial status  </option> }
 
@@ -273,7 +287,7 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         <label >Desire Length </label>
 
-          <select id="length" name={"length"} onChange={handleChange} title="length" Value={data.length} >
+          <select id="length" name={"length"} onChange={handleChange} title="length" Value={data.length} required>
 
           { data.length ? null : <option value={""} > select desire length  </option> }
 
@@ -295,7 +309,7 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         <label >Do you smoke?  </label>
 
-          <select id="smoke" name={"smoke"} onChange={handleChange} title="smoke" Value={data.smoke} >
+          <select id="smoke" name={"smoke"} onChange={handleChange} title="smoke" Value={data.smoke} required >
 
           { data.smoke ? null : <option value={""} > select an answer  </option> }
 
@@ -312,7 +326,7 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         <label >Do you have guarantor?   </label>
 
-          <select id="guarantor" name={"guarantor"} onChange={handleChange} title="guarantor" Value={data.guarantor} >
+          <select id="guarantor" name={"guarantor"} onChange={handleChange} title="guarantor" Value={data.guarantor} required >
 
           { data.guarantor ? null : <option value={""} > select an answer  </option> }
 
@@ -329,7 +343,7 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         <label >Do you have any children under 18 years old? </label>
 
-          <select id="children_minor" name={"children_minor"} onChange={handleChange} title="children_minor" Value={data.children_minor} >
+          <select id="children_minor" name={"children_minor"} onChange={handleChange} title="children_minor" Value={data.children_minor} required>
 
           { data.children_minor ? null : <option value={""} > select an answer  </option> }
 
@@ -347,7 +361,7 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         <label >Do you intend to keep pet?  </label>
 
-          <select id="pet" name={"pet"} onChange={handleChange} title="pet" Value={data.pet} >
+          <select id="pet" name={"pet"} onChange={handleChange} title="pet" Value={data.pet} required >
 
           { data.pet ? null : <option value={""} > select an answer  </option> }
 
@@ -369,7 +383,7 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         <label >Do you have bankruptcy or foreclosure in past 3 years?   </label>
 
-          <select id="bankruptcy_in_past_3years" name={"bankruptcy_in_past_3years"} onChange={handleChange} title="bankruptcy_in_past_3years" Value={data.bankruptcy_in_past_3years} >
+          <select id="bankruptcy_in_past_3years" name={"bankruptcy_in_past_3years"} onChange={handleChange} title="bankruptcy_in_past_3years" Value={data.bankruptcy_in_past_3years} required>
 
           { data.bankruptcy_in_past_3years ? null : <option value={""} > select an answer  </option> }
 
@@ -386,7 +400,7 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         <label >Have you ever been guilty of felony? </label>
 
-          <select id="felony" name={"felony"} onChange={handleChange} title="felony" Value={data.felony} >
+          <select id="felony" name={"felony"} onChange={handleChange} title="felony" Value={data.felony} required>
 
           { data.felony ? null : <option value={""} > select an answer  </option> }
 
@@ -404,7 +418,7 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         <label >Have you broken a lease?  </label>
 
-          <select id="broken_lease" name={"broken_lease"} onChange={handleChange} title="broken_lease" Value={data.broken_lease} >
+          <select id="broken_lease" name={"broken_lease"} onChange={handleChange} title="broken_lease" Value={data.broken_lease} required>
 
           { data.broken_lease ? null : <option value={""} > select an answer  </option> }
 
@@ -427,6 +441,91 @@ const HomeForm = ({teamid, event, typeId }) => {
 
 
       
+
+
+          <h6 > description </h6>
+
+          <div className={Style.checkbox} > 
+              <input type={'checkbox'} name={'picture'} onchange={handleChange} value={data.picture}  placeholder={'first name'} disabled={false} required={true}  />
+
+          <label >Required I confirm that all information provided in this pre-tenancy questionnaire is accurate and truthful  </label>
+
+              
+          </div>
+
+                    <div className={Style.checkbox} > 
+              <input type={'checkbox'} name={'picture'} onchange={handleChange} value={data.picture}  placeholder={'first name'} disabled={false} required={true}  />
+
+          <label > I declared that the information i have provided is true and correct and hereby you to verify the details given.  </label>
+
+              
+          </div>          
+          
+          <div className={Style.checkbox} > 
+              <input type={'checkbox'} name={'picture'} onchange={handleChange} value={data.picture}  placeholder={'first name'} disabled={false} required={true}  />
+
+          <label >I understand that under the Tenant Fees Act 2019 providing false and or misleading information on this form will lead to the retention. </label>
+
+              
+          </div>          
+          
+          <div className={Style.checkbox} > 
+              <input type={'checkbox'} name={'picture'} onchange={handleChange} value={data.picture}  placeholder={'first name'} disabled={false} required={true}  />
+
+          <label >Required I agree to make the payment for appliaction fees of $60 immediately i submited my application.  </label>
+
+              
+          </div>
+
+            <div className={Style.checkbox} > 
+              <input type={'checkbox'} name={'picture'} onchange={handleChange} value={data.picture}  placeholder={'first name'} disabled={false} required={true}  />
+
+          <label >Please cash/check is not acceptable for the refundable application form of $60  </label>
+
+              
+          </div>
+
+          <div className={Style.checkbox} > 
+              <input type={'checkbox'} name={'picture'} onchange={handleChange} value={data.picture}  placeholder={'first name'} disabled={false} required={true}  />
+
+          <label >Don’t submit the Application form if you are not ready to make the application fees or you don’t feel comfortable. </label>
+
+              
+          </div>
+
+
+                    <div className={Style.checkbox} > 
+              <input type={'checkbox'} name={'picture'} onchange={handleChange} value={data.picture}  placeholder={'first name'} disabled={false} required={true}  />
+
+          <label >I agree to pay my refundable application fee of $60 immediately i submit my application form..  </label>
+
+              
+          </div>
+
+          
+
+
+          
+
+        <div className={Style.select} >
+
+
+        <label >Do you agree to the rules and regulations of this Application form?  </label>
+
+          <select id="rules" name={"rules"} onChange={handleChange} title="rules" Value={data.rules} required>
+
+          { data.rules ? null : <option value={""} > select an answer  </option> }
+
+              <option  value={"yes"} > yes  </option>
+              <option  value={"no"} > no  </option>
+
+          </select>
+
+        </div>  
+
+
+        
+          <Inputs label={'Signature'} type={'text'} name={'signature'} onchange={handleChange} value={data.signature} placeholder={'your signature  '} disabled={false} required={true}  />
 
 
 
