@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Style from "../../styles/admin/HomeForm.module.css"
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {  faX, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { AlertError, Inputs } from "./list/Generallist";
+import { AlertError, Inputs  } from "./list/Generallist";
+
+import SignatureCanvas from 'react-signature-canvas'
 
 
-const HomeForm = ({teamid, event, typeId }) => {
-  const [data, setInputs] = useState({})
+const HomeForm = ({teamid, event, typeId }) => {  
+  const sigCanvas = useRef({});
+  const [signatureURL, setSignatureURL] = useState(null);
   const [img, setFile] = useState({});
+  
+  const [data, setInputs] = useState({})
   const [submitbtn, setSubmitBtn] = useState(false)
 
   const [fetchs, setFetch] = useState({link: "", method: ""})
@@ -17,9 +22,23 @@ const HomeForm = ({teamid, event, typeId }) => {
 
 
   let navigate = useNavigate()
-
-  console.log(data);
   
+
+
+  const clearSignature = () => {
+    sigCanvas.current.clear();
+    setSignatureURL(null);
+  };
+
+  // const saveSignature = () => {
+  //   if (!sigCanvas.current.isEmpty()) {
+  //     const dataURL = sigCanvas.current.getTrimmedCanvas().toDataURL('image/png');
+  //     setSignatureURL(dataURL);
+  //   } else {
+  //     alert('Please provide a signature first.');
+  //   }
+  // };
+
 
 
 
@@ -76,91 +95,118 @@ const HomeForm = ({teamid, event, typeId }) => {
         setInputs(values => ({...values, [name]: value}))
 
       }
-    
+
       const handleFileChange = (event) => {
         setFile(event.target.files)
       };
+    
 
 
 
-          console.log(data, img);
+
+          console.log(data, );
     
 
 
       const HandleSubmit = async (event) => {
         event.preventDefault();
         setSubmitBtn(!submitbtn)
-    
-        const formData = new FormData();
-      
-    
-        Array.from(img).forEach(imgs => {
-    
-          formData.append('img', imgs);
-    
-      });
-    
-            formData.append('data',  JSON.stringify(data));
 
+        if (!sigCanvas.current.isEmpty()) {
+          const dataURL = sigCanvas.current?.toDataURL('image/png');
+          console.log(dataURL);
+          
+                  if (data.rules == "no") {
+                    setSubmitBtn(false)
 
-            if (data.rules == "no") {
-              return AlertError("you didn't accept the rules and regulations kindly cancel or accept")
+                    return AlertError("you didn't accept the rules and regulations kindly cancel or accept")
 
-            }
-    
-    
-    
-       const api = fetch(process.env.REACT_APP_API_LINK + fetchs.link, {
-        method: fetchs.method,
-        // credentials: "include",
-       // headers: {'Content-Type': "application/json", },
-        body:   formData
-        })
-
-
+                  }
+                        const formData = new FormData();
+            
         
-        .then((res) => {
-           if (res.status == 200) {
+                  formData.append('signature', dataURL );
 
-            const link =teamid.replaceAll(' ','-')
+                          Array.from(img).forEach(imgs => {
+    
+                            formData.append('img', imgs);
+                      
+                          });
+
+                  formData.append('data',  JSON.stringify(data));
+
+                  
+
+
 
           
-                navigate("/user"); 
-
-           } else {
-            setSubmitBtn(false);
-       
-           }
-
-           return res.json()
-        }).then(
-          data => {
-            console.log(data.message, 'llk')       
-
-           
-            if (data.success == false) {
-               AlertError(data.message)
-
-               setSubmitBtn(false);
-               
-            } else {
-                            // navigate("admin"); 
-
-            }
-          })
+          
+          
+            const api = fetch(process.env.REACT_APP_API_LINK + "admin/add/send-mail", {
+              method: "POST",
+              // credentials: "include",
+            // headers: {'Content-Type': "application/json", },
+              body:   formData
+              })
 
 
-        
-        .catch((e) => {
-          console.log(e);
-          setSubmitBtn(false)
-            AlertError(e)
+              
+              .then((res) => {
+                if (res.status == 200) {
+                                  setInputs("")
+                                  setFile(null)
+                                  clearSignature()
+                                  setSubmitBtn(false);
 
-          let msg = "fail"
-        })
+                } else {
+                  setSubmitBtn(false);
+            
+                }
+
+                return res.json()
+              }).then(
+                data => {
+                  console.log(data.message, 'llk')       
+
+                
+                  if (data.success == false) {
+                    AlertError(data.message)
+
+                    setSubmitBtn(false);
+                    
+                  } else {
+                                  // navigate("admin"); 
+
+                                  setInputs("")
+                                  setFile(null)
+                                  clearSignature()
+                                  setSubmitBtn(false);
+
+                        
+
+                  }
+                })
 
 
-        
+              
+              .catch((e) => {
+                console.log(e);
+                setSubmitBtn(false)
+                  AlertError(e)
+
+                let msg = "fail"
+              })
+
+
+              
+      // Here, you can send formData and dataURL to your server or API
+        console.log('Signature:', dataURL);
+        } else {
+                              setSubmitBtn(false)
+
+          AlertError("please sign before you submit")
+        }
+
     
     
      
@@ -525,9 +571,27 @@ const HomeForm = ({teamid, event, typeId }) => {
 
 
         
-          <Inputs label={'Signature'} type={'text'} name={'signature'} onchange={handleChange} value={data.signature} placeholder={'your signature  '} disabled={false} required={true}  />
+
+      <div style={{ border: '1px solid black', width: 405, height: "auto", margin: 20 }}>
+        <label > Signature </label>
+        <SignatureCanvas
+          ref={sigCanvas}
+          canvasProps={{ width: 400, height: 150, className: 'sigCanvas' }}
+          backgroundColor="black"
+          penColor="white"
+        />
+        <span  > <button style={{ display: 'inline', background: "red"}} type="button" onClick={clearSignature}>X</button></span>      
+        {/* <span > <button style={{ display: 'inline', }}type="button" onClick={saveSignature}>Save</button> </span>       */}
+      </div>
 
 
+
+      {/* {signatureURL && (
+        <div>
+          <p>Saved Signature:</p>
+          <img src={signatureURL} alt="signature" style={{ border: '1px solid gray' }} />
+        </div>
+      )} */}
 
 
 
