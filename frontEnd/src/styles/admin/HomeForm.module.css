@@ -48,18 +48,6 @@
 
 }
 
-.pimg {
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    margin: auto;
-}
-
-.pimg img {
-    width: 100%;
-    height: 100%;
-}
-
 
 
 .teamAdmin {
@@ -166,12 +154,41 @@
 }
 
 
+.signature {
+    border: 1px solid black;
+    width: 405px;
+    height: auto ;
+    margin: 20px;
+    padding: 5px;
+}
+
+.signature canvas {
+    width: 90%;
+    height: 150px;
+    margin: auto;
+    text-align: center;
+    display: block;
+    border: 1px solid black;
+
+}
+
+.signature span button {
+    display: inline;
+    background: red;
+    text-align: left;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25); 
+
+
+    
+}
+
+.signature span {
+    margin: 5%;
+
+}
+
 
 @media (max-width: 800px) {
-    .fix, .res, .squads {
-        grid-template-columns: repeat(2, 1fr);
-
-    }
 
     .app form {
     width: 90%;
@@ -191,22 +208,11 @@
 
 
  @media (max-width: 500px) {
-    .fix, .res, .squads {
-        grid-template-columns: repeat(1, 1fr);
 
-    }
-
-    .newsgrid {
-        grid-template-columns: repeat(3, 1fr);
-
-    }
     .half_inp {
         width: auto;
     }
 
-    .name {
-        display: block;
-    }
     
 }
 
@@ -221,11 +227,19 @@
         font-size: medium;
     }
     
+    .signature {
+        width: 100%;
+        margin: 0px;
+    }    
 
-    .newsgrid {
-        grid-template-columns: repeat(1, 1fr);
+    .signature canvas {
+    width: 98%;
+    height: 100px;
+    margin: auto;
+    text-align: center;
+    display: block;
+    border: 1px solid black;
 
-    }
-    
+}
     
      }

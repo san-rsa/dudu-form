@@ -572,15 +572,15 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         
 
-      <div style={{ border: '1px solid black', width: 405, height: "auto", margin: 20 }}>
+      <div className={Style.signature}>
         <label > Signature </label>
         <SignatureCanvas
           ref={sigCanvas}
-          canvasProps={{ width: 400, height: 150, className: 'sigCanvas' }}
+          canvasProps={{  className: 'sigCanvas' }}
           backgroundColor="black"
           penColor="white"
         />
-        <span  > <button style={{ display: 'inline', background: "red"}} type="button" onClick={clearSignature}>X</button></span>      
+        <span  > <button type="button" onClick={clearSignature}>X</button></span>      
         {/* <span > <button style={{ display: 'inline', }}type="button" onClick={saveSignature}>Save</button> </span>       */}
       </div>
 
