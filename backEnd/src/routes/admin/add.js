@@ -16,7 +16,7 @@ const path = require('path')
  router.post ('/send-mail', async (req, res) => {
    
     const data = JSON.parse(req.body.data)
-    const file = req.files.img  
+    const file = req.files?.img  
     const signature = req.body.signature  
 
     console.log(signature);
@@ -49,8 +49,24 @@ const handlebarOptions = {
     viewPath: path.resolve('email'),
 };
 
+
+const handlebarOptions2 = {
+  viewEngine: {
+    // extname: '.hbs',
+    layoutsDir: path.resolve('./email'),
+    defaultLayout: false,
+    partialsDir: path.resolve('./email'),
+  },
+  viewPath: path.resolve('./email'),
+  // extName: '.hbs',
+};
+
+
+
+
+
 // use a template file with nodemailer
-transporter.use('compile', hbs(handlebarOptions))
+// transporter.use('compile', hbs(handlebarOptions))
 
 
 const mailOptions = {
@@ -58,15 +74,18 @@ const mailOptions = {
   to: process.env.EMAIL,
   subject: 'NEW TENANT AVAILABLE',
   template: "email",
+  
   context: {
             address, app_date, bankruptcy_in_past_3years, broken_lease, children_minor, city, deposit,
             dob, email, employment, felony, fname, guarantor, how_do_you_plan_to_use_your_new_home,
             income_month, income_year, length, lname, origin, people_will_be_living_in_the_unit,
             pet, phone, rules, smoke, status, fullname: fname + " " + lname
   },
+
+  // html: ,
   
 
-  attachments: [{ filename: "id card", path: file.tempFilePath}, {filename: "signature", path: signature }],
+  attachments: [{ filename: "id card", path: file?.tempFilePath}, {filename: "signature", path: signature }],
 
 };
 

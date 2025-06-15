@@ -4,7 +4,7 @@ import Style from "../../styles/admin/HomeForm.module.css"
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {  faX, faHeart } from '@fortawesome/free-solid-svg-icons'
 import { ToastContainer, toast, Bounce } from 'react-toastify';
-import { AlertError, Inputs  } from "./list/Generallist";
+import { AlertError, AlertSuccess, Inputs  } from "./list/Generallist";
 
 import SignatureCanvas from 'react-signature-canvas'
 
@@ -17,75 +17,12 @@ const HomeForm = ({teamid, event, typeId }) => {
   const [data, setInputs] = useState({})
   const [submitbtn, setSubmitBtn] = useState(false)
 
-  const [fetchs, setFetch] = useState({link: "", method: ""})
-
-
-
-  let navigate = useNavigate()
-  
-
 
   const clearSignature = () => {
     sigCanvas.current.clear();
     setSignatureURL(null);
   };
 
-  // const saveSignature = () => {
-  //   if (!sigCanvas.current.isEmpty()) {
-  //     const dataURL = sigCanvas.current.getTrimmedCanvas().toDataURL('image/png');
-  //     setSignatureURL(dataURL);
-  //   } else {
-  //     alert('Please provide a signature first.');
-  //   }
-  // };
-
-
-
-
-
-    //     useEffect(() => {
-    //       if (!typeId) {
-    //         fetch(process.env.REACT_APP_API_LINK  + "getone/team/" + teamid)
-    //         .then((res) =>  res.json())
-    //         .then((data) =>  setInputs(values => ({...values, teamid: data.name}))
-    //       );
-    //       }
-
-    //     }, []);
-
-
-
-    //     useEffect(() => {
-    //       if (typeId) {
-    //         fetch(process.env.REACT_APP_API_LINK  + "getone/player/" + typeId.replaceAll('-',' '))
-    //         .then((res) =>  res.json())
-    //         .then((data) =>  setInputs({
-    //           fname:data.name.first,
-    //           lname: data.name.last,
-    //           position: data.position,
-    //           dob: data.dob.slice(0, 10), 
-    //           img: data.picture.url, 
-    //           teamid: data.teamId
-              
-              
-    //         })
-    //       );
-    //       }       
-
-    //     if (event?.add ) {
-    //   setFetch({link: 'admin/add/player/', method: 'POST'  })
-    // } else if (event?.edit) {
-    //   setFetch({link: 'admin/edit/player/' + typeId.replaceAll('-',' '), method: 'PATCH'  })
-
-    // }
-
-    //   }, []);
-        
-
-
-
-
-    // const h1 = (event?.add) ? "Add Player" : (event?.edit) ? "Edit Player" : "please try again later" ;  
     
     const h1 = "SUMMITSAGE ESTATES INVESTMENT AND MANAGEMENT APPLYING APPOINTMENT APPLICATION FORM"
     
@@ -144,8 +81,6 @@ const HomeForm = ({teamid, event, typeId }) => {
           
             const api = fetch(process.env.REACT_APP_API_LINK + "admin/add/send-mail", {
               method: "POST",
-              // credentials: "include",
-            // headers: {'Content-Type': "application/json", },
               body:   formData
               })
 
@@ -153,10 +88,15 @@ const HomeForm = ({teamid, event, typeId }) => {
               
               .then((res) => {
                 if (res.status == 200) {
-                                  setInputs("")
+                                  // setInputs({success: true})
                                   setFile(null)
                                   clearSignature()
                                   setSubmitBtn(false);
+                                  AlertSuccess("success")
+                                   setTimeout(() => {
+                                     window.location.reload(); // Refresh the page
+                                  }, 2000); // 5000 milliseconds = 5 seconds
+
 
                 } else {
                   setSubmitBtn(false);
@@ -177,10 +117,12 @@ const HomeForm = ({teamid, event, typeId }) => {
                   } else {
                                   // navigate("admin"); 
 
-                                  setInputs("")
-                                  setFile(null)
-                                  clearSignature()
-                                  setSubmitBtn(false);
+                                  // setInputs({})
+                                  // setFile(null)
+                                  // clearSignature()
+                                  // setSubmitBtn(false);
+                                  // AlertSuccess("success")
+
 
                         
 
@@ -483,7 +425,7 @@ const HomeForm = ({teamid, event, typeId }) => {
 
         <Inputs label={'How much will you be able to pay for deposit if your application was approved? '} type={'number'} name={'deposit'} onchange={handleChange} value={data.deposit}  placeholder={'How much will you be able to pay for deposit if your application was approved?'} disabled={false} required={true}  />
 
-       <Inputs label={'Upload a copy of your identity,if you are not with it or you don’t feel comfortable you can submit the application form! '} type={'file'} name={'picture'} onchange={handleFileChange} value={data.picture}  placeholder={'first name'} disabled={false} required={true}  />
+       <Inputs label={'Upload a copy of your identity,if you are not with it or you don’t feel comfortable you can submit the application form! '} type={'file'} name={'picture'} onchange={handleFileChange} value={data.picture}  placeholder={'first name'} disabled={false} required={false}  />
 
 
       
